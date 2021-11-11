@@ -10,35 +10,31 @@ namespace PlatformDemo.Controllers
     public class TicketsController : ControllerBase
     {
         [HttpGet]
-        [Route("api/tickets")]
+        [Route("api/[controller]")]
         public IActionResult Get()
         {
             return Ok("Reading all the tickets");
         }
 
-        [HttpGet]
-        [Route("api/ticket/{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
             return Ok($"Reading ticket #{id}");
         }
 
         [HttpPost]
-        [Route("api/tickets")]
         public IActionResult Post()
         {
             return Ok("Creating  a ticket");
         }
 
         [HttpPut]
-        [Route("api/tickets")]
         public IActionResult Put()
         {
             return Ok("Updating a ticket");
         }
 
-        [HttpDelete]
-        [Route("api/ticket/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete()
         {
             return Ok("Deleting a ticket #{id}");
