@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace PlatformDemo.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class TicketsController : ControllerBase
     {
         [HttpGet]
-        [Route("api/[controller]")]
         public IActionResult Get()
         {
             return Ok("Reading all the tickets");
