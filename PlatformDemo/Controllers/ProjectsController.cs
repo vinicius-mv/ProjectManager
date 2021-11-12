@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlatformDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,15 +45,32 @@ namespace PlatformDemo.Controllers
         /// <summary>
         /// api/projects/{pid}/tickets?tid={tid}
         /// </summary>
+        //[HttpGet]
+        //[Route("/api/projects/{pid}/tickets")]
+        //public IActionResult GetProjectTicket(int pId, [FromQuery] int tId) // [FromQuery] optional
+        //{
+        //    if (tId == 0)
+        //        return Ok("Reading all tickets belong to the project {pId}");
+        //    else
+
+        //        return Ok($"Reading project #{pId}, ticket #{tId}");
+        //}
+
+        /// <summary>
+        /// api/projects/{pid}/tickets?tid={tid}  
+        /// api/projects/{pid}/tickets?tid={tid}&title=abc&description=def
+        /// by default every prop in Ticket could be passed from Query
+        /// </summary>
         [HttpGet]
         [Route("/api/projects/{pid}/tickets")]
-        public IActionResult GetProjectTicket(int pId, [FromQuery] int tId) // [FromQuery] optional
+        public IActionResult GetProjectTicket(Ticket ticket) 
         {
-            if (tId == 0)
-                return Ok("Reading all tickets belong to the project {pId}");
-            else
+            if(ticket == null) return BadRequest("Parameters not provided properly!");
 
-                return Ok($"Reading project #{pId}, ticket #{tId}");
+            if (ticket.TicketId == 0)
+                return Ok($"Reading all tickets belong to the project #{ticket.ProjectId}");
+            else
+                return Ok($"Reading project #{ticket.ProjectId}, ticket #{ticket.TicketId}, title: {ticket.Title}, description: {ticket.Description}");
         }
     }
 }
