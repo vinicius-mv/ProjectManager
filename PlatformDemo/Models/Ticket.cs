@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlatformDemo.ModelValidations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,23 +18,10 @@ namespace PlatformDemo.Models
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Owner { get; set; }
 
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Range(0, 10_000)]
-        public double Price { get; set; }
-
-        [StringLength(100)]
-        public string Address { get; set; }
-
-        [MaxLength(64_000)]
-        public byte[] File { get; set; }
-
-        [CreditCard]
-        public string CreditCard { get; set; }
-
-        [Phone]
-        public string  PhoneNumber { get; set; }
+        [Ticket_EnsureDueDateForTicketOwner]
+        [Ticket_EnsureDueDateInFuture]
+        public DateTime? DueDate { get; set; }
     }
 }
