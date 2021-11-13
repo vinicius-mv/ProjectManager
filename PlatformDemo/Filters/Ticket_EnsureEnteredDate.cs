@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using PlatformDemo.Models;
 using System;
@@ -19,8 +20,13 @@ namespace PlatformDemo.Filters
                 ticket.EnteredDate.HasValue == false)
             {
                 context.ModelState.AddModelError($"{nameof(ticket.EnteredDate)}", $"{nameof(ticket.EnteredDate)} is required");
-                // short circuit MVC pipeline
-                context.Result = new BadRequestObjectResult(context.ModelState);
+                //context.Result = new BadRequestObjectResult(context.ModelState);
+
+                var problemDetails = new ValidationProblemDetails(context.ModelState)
+                {
+                    Status = StatusCodes.Status400BadRequest
+                };
+                context.Result = new BadRequestObjectResult(problemDetails);
             }
 
 
