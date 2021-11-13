@@ -1,16 +1,9 @@
 ﻿using Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using PlatformDemo.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace PlatformDemo.Controllers
 {
-    [ApiController]
+    [ApiController] 
     [Route("api/[controller]")]
-    //[Version1DiscontinuedResourceFilter]
     public class TicketsController : ControllerBase
     {
         [HttpGet]
@@ -26,18 +19,8 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostV1([FromBody] Ticket ticket)
+        public IActionResult Post([FromBody] Ticket ticket)
         {
-            return Ok(ticket);
-        }
-
-        [HttpPost]
-        [Route("/api/v2/tickets")] 
-        [Ticket_ValidateDatesActionFilter]
-        public IActionResult PostV2([FromBody] Ticket ticket)
-        {
-            // using filter we can implement new validation in the model
-            // if we had used DataAnnotations, we could have broken the V1 
             return Ok(ticket);
         }
 
