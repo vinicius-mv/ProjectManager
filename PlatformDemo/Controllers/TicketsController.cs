@@ -33,7 +33,7 @@ namespace PlatformDemo.Controllers
 
         [HttpPost]
         [Route("/api/v2/tickets")] 
-        [Ticket_EnsureEnteredDate]
+        [Ticket_ValidateDatesActionFilter]
         public IActionResult PostV2([FromBody] Ticket ticket)
         {
             // using filter we can implement new validation in the model
