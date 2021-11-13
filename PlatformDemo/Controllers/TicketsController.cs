@@ -10,7 +10,7 @@ namespace PlatformDemo.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Version1DiscontinuedResourceFilter]
+    //[Version1DiscontinuedResourceFilter]
     public class TicketsController : ControllerBase
     {
         [HttpGet]
