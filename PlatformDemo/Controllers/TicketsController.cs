@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlatformDemo.Filters;
 using PlatformDemo.Models;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,18 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Ticket ticket)
+        public IActionResult PostV1([FromBody] Ticket ticket)
         {
+            return Ok(ticket);
+        }
+
+        [HttpPost]
+        [Route("/api/v2/tickets")] 
+        [Ticket_EnsureEnteredDate]
+        public IActionResult PostV2([FromBody] Ticket ticket)
+        {
+            // using filter we can implement new validation in the model
+            // if we had used DataAnnotations, we could have broken the V1 
             return Ok(ticket);
         }
 
