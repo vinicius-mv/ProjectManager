@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using PlatformDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +20,15 @@ namespace PlatformDemo.Filters
             {
                 bool isValid = true;
 
-                if (ticket.EnteredDate.HasValue == false)
+                if (ticket.ReportDate.HasValue == false)
                 {
                     context.ModelState.AddModelError($"EnteredDate", $"EnteredDate is required.");
                     isValid = false;
-
-
                 }
 
-                if (ticket.EnteredDate.HasValue &&
+                if (ticket.ReportDate.HasValue &&
                     ticket.DueDate.HasValue &&
-                    ticket.EnteredDate > ticket.DueDate)
+                    ticket.ReportDate > ticket.DueDate)
                 {
                     context.ModelState.AddModelError("DueDate", "DueDate has to be later than the EnteredDate.");
                     isValid = false;

@@ -1,4 +1,4 @@
-﻿using PlatformDemo.Models;
+﻿using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace PlatformDemo.ModelValidations
 {
-    public class Ticket_EnsureDueDateInFuture : ValidationAttribute
+    public class Ticket_EnsureDueDateForTicketOwner : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var ticket = (Ticket)validationContext.ObjectInstance;
 
-            // When creating a ticket, ticket due date must be in the future
-            if (ticket.TicketId == null)
+            if (!string.IsNullOrWhiteSpace(ticket.Owner))
             {
-                if (ticket.DueDate.HasValue && ticket.DueDate.Value < DateTime.Now)
-                {
-                    return new ValidationResult("Due date must be in the future");
-                }
+                if (!ticket.DueDate.HasValue)
+                    return new ValidationResult("Due date is required when ticket has an owner");
             }
+
             return ValidationResult.Success;
         }
     }

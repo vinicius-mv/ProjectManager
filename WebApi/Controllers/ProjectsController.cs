@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PlatformDemo.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Core.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PlatformDemo.Controllers
 {
