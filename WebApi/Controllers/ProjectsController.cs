@@ -1,72 +1,94 @@
 ﻿using Core.Models;
+using DataStore.EF;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace PlatformDemo.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     public class ProjectsController : ControllerBase
     {
+        private readonly BugTrackerContext _db;
+
+        public ProjectsController(BugTrackerContext db)
+        {
+            _db = db;
+        }
+
         [HttpGet]
-        [Route("api/[controller]")]
         public IActionResult Get()
         {
-            return Ok("Reading all the projects");
+            return Ok(_db.Projects.ToList());
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok($"Reading project #{id}");
+            var project = _db.Projects.Find(id);
+            if (project == null)
+                return NotFound();
+
+            return Ok(project);
+        }
+
+
+        [HttpGet]
+        [Route("/api/projects/{pid}/tickets")]
+        public IActionResult GetProjectTickets(int pId)
+        {
+            var tickets = _db.Tickets.Where(t => t.ProjectId == pId).ToList();
+            if (tickets == null || tickets.Count <= 0)
+                return NotFound();
+
+            return Ok(tickets);
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post([FromBody] Project project)
         {
-            return Ok("Creating  a project");
+            _db.Projects.Add(project);
+            _db.SaveChanges();
+
+            return CreatedAtAction(
+                actionName: nameof(GetById),
+                routeValues: new { id = project.ProjectId },
+                value: project);
         }
 
-        [HttpPut]
-        public IActionResult Put()
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Project project)
         {
-            return Ok("Updating a project");
+            if (id != project.ProjectId) return BadRequest();
+
+            _db.Entry(project).State = EntityState.Modified;
+
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch
+            {
+                if(_db.Projects.Find(id) == null)
+                    return NotFound();
+
+                throw; // generate a Internal Server Error 500
+            }
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return Ok("Deleting a project #{id}");
-        }
+            var project = _db.Projects.Find(id);
+            if(project == null) return NotFound();
 
-        /// <summary>
-        /// api/projects/{pid}/tickets?tid={tid}
-        /// </summary>
-        //[HttpGet]
-        //[Route("/api/projects/{pid}/tickets")]
-        //public IActionResult GetProjectTicket(int pId, [FromQuery] int tId) // [FromQuery] optional
-        //{
-        //    if (tId == 0)
-        //        return Ok("Reading all tickets belong to the project {pId}");
-        //    else
+            _db.Projects.Remove(project);
+            _db.SaveChanges();
 
-        //        return Ok($"Reading project #{pId}, ticket #{tId}");
-        //}
-
-        /// <summary>
-        /// api/projects/{pid}/tickets?tid={tid}  
-        /// api/projects/{pid}/tickets?tid={tid}&title=abc&description=def
-        /// by default every prop in Ticket could be passed from Query
-        /// </summary>
-        [HttpGet]
-        [Route("/api/projects/{pid}/tickets")]
-        public IActionResult GetProjectTicket(Ticket ticket) 
-        {
-            if(ticket == null) return BadRequest("Parameters not provided properly!");
-
-            if (ticket.TicketId == 0)
-                return Ok($"Reading all tickets belong to the project #{ticket.ProjectId}");
-            else
-                return Ok($"Reading project #{ticket.ProjectId}, ticket #{ticket.TicketId}, title: {ticket.Title}, description: {ticket.Description}");
+            return Ok(project);
         }
     }
 }
