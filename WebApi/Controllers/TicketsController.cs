@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlatformDemo.Controllers
 {
@@ -19,15 +20,15 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_db.Tickets.ToList());
+            return Ok(await _db.Tickets.ToListAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var ticket = _db.Tickets.Find(id);
+            var ticket = await _db.Tickets.FindAsync(id);
             if (ticket == null)
                 return NotFound();
 
@@ -35,10 +36,10 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Ticket ticket)
+        public async Task<IActionResult> Post([FromBody] Ticket ticket)
         {
             _db.Tickets.Add(ticket);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction(
                 actionName: nameof(GetById),
@@ -47,7 +48,7 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Ticket ticket)
+        public async Task<IActionResult> Put(int id, Ticket ticket)
         {
             if (id != ticket.TicketId) return BadRequest();
 
@@ -55,7 +56,7 @@ namespace PlatformDemo.Controllers
 
             try
             {
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -68,13 +69,13 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var ticket = _db.Tickets.Find(id);
+            var ticket = await _db.Tickets.FindAsync(id);
             if (ticket == null) return NotFound();
 
             _db.Tickets.Remove(ticket);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return Ok(ticket);
         }

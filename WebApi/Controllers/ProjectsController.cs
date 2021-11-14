@@ -3,6 +3,7 @@ using DataStore.EF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlatformDemo.Controllers
 {
@@ -18,15 +19,15 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_db.Projects.ToList());
+            return Ok(await _db.Projects.ToListAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var project = _db.Projects.Find(id);
+            var project = await _db.Projects.FindAsync(id);
             if (project == null)
                 return NotFound();
 
@@ -36,9 +37,9 @@ namespace PlatformDemo.Controllers
 
         [HttpGet]
         [Route("/api/projects/{pid}/tickets")]
-        public IActionResult GetProjectTickets(int pId)
+        public async Task<IActionResult> GetProjectTickets(int pId)
         {
-            var tickets = _db.Tickets.Where(t => t.ProjectId == pId).ToList();
+            var tickets = await _db.Tickets.Where(t => t.ProjectId == pId).ToListAsync();
             if (tickets == null || tickets.Count <= 0)
                 return NotFound();
 
@@ -46,10 +47,10 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Project project)
+        public async Task<IActionResult> Post([FromBody] Project project)
         {
             _db.Projects.Add(project);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction(
                 actionName: nameof(GetById),
@@ -58,7 +59,7 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Project project)
+        public async Task<IActionResult> Put(int id, Project project)
         {
             if (id != project.ProjectId) return BadRequest();
 
@@ -66,27 +67,26 @@ namespace PlatformDemo.Controllers
 
             try
             {
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch
             {
-                if(_db.Projects.Find(id) == null)
+                if(await _db.Projects.FindAsync(id) == null)
                     return NotFound();
 
                 throw; // generate a Internal Server Error 500
             }
-
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var project = _db.Projects.Find(id);
+            var project = await _db.Projects.FindAsync(id);
             if(project == null) return NotFound();
 
             _db.Projects.Remove(project);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return Ok(project);
         }
