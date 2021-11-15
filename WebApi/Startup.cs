@@ -42,7 +42,7 @@ namespace PlatformDemo
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
-                options.ApiVersionReader = new QueryStringApiVersionReader("version", "api-version");
+                options.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
             });
         }
 
