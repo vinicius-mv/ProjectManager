@@ -9,8 +9,9 @@ using WebApi.Filters.V2;
 
 namespace PlatformDemo.Controllers.V2
 {
+    [ApiVersion("2.0")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/tickets")]
     public class TicketsV2Controller : ControllerBase
     {
         private readonly BugTrackerContext _db;

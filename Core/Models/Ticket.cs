@@ -81,7 +81,7 @@ namespace Core.Models
 
         public bool ValidateDescription()
         {
-            return string.IsNullOrWhiteSpace(Description);
+            return !string.IsNullOrWhiteSpace(Description);
         }
 
     }

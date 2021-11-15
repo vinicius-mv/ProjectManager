@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PlatformDemo.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("api/[controller]")]
     public class ProjectsController : ControllerBase
