@@ -11,7 +11,7 @@ namespace PlatformDemo.Controllers.V2
 {
     [ApiVersion("2.0")]
     [ApiController]
-    [Route("api/tickets")]
+    [Route("api/v{v:apiVersion}/tickets")]
     public class TicketsV2Controller : ControllerBase
     {
         private readonly BugTrackerContext _db;
