@@ -79,6 +79,11 @@ namespace Core.Models
             return DueDate.Value.Date >= ReportDate.Value.Date;
         }
 
+        public bool ValidateDescription()
+        {
+            return string.IsNullOrWhiteSpace(Description);
+        }
+
     }
 
 }
