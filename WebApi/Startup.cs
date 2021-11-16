@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace PlatformDemo
 {
@@ -46,7 +47,10 @@ namespace PlatformDemo
             });
 
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options => { 
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Web API v1", Version = "version 1" }); // generate swagger file at path: /swagger/v1/swagger.json"
+                options.SwaggerDoc("v2", new OpenApiInfo { Title = "My Web API v2", Version = "version 2" }); // generate swagger file at path: /swagger/v2/swagger.json"
+            }); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +67,8 @@ namespace PlatformDemo
             }
             app.UseSwagger();
             app.UseSwaggerUI(options => {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"); 
+                options.SwaggerEndpoint("/swagger/v2/swagger.json", "WebAPI v2");
             });
 
             app.UseRouting();
