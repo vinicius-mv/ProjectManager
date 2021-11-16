@@ -42,8 +42,11 @@ namespace PlatformDemo
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
-                options.ApiVersionReader = new QueryStringApiVersionReader("version", "api-version");
+                options.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
             });
+
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +59,12 @@ namespace PlatformDemo
                 // Create in-memory database for dev enviroment
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
+
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(options => {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1");
+            });
 
             app.UseRouting();
 
