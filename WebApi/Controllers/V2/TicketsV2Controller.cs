@@ -6,6 +6,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Filters.V2;
+using WebApi.QueryFilters;
+
+//TODO: filter using System.Web.Http.OData
 
 namespace PlatformDemo.Controllers.V2
 {
@@ -22,10 +25,34 @@ namespace PlatformDemo.Controllers.V2
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] TicketQueryFilter ticketQueryFilter)
         {
-            return Ok(await _db.Tickets.ToListAsync());
+            IQueryable<Ticket> tickets = _db.Tickets;
+
+            if (ticketQueryFilter != null)
+            {
+                if (ticketQueryFilter.Id.HasValue)
+                    tickets = tickets.Where(x => x.TicketId == ticketQueryFilter.Id);
+
+                if (!string.IsNullOrWhiteSpace(ticketQueryFilter.Title))
+                    tickets = tickets.Where(x => x.Title.Contains(ticketQueryFilter.Title, StringComparison.OrdinalIgnoreCase));
+
+                if (!string.IsNullOrWhiteSpace(ticketQueryFilter.Description))
+                    tickets = tickets.Where(x => x.Description.Contains(ticketQueryFilter.Description, StringComparison.OrdinalIgnoreCase));
+
+            }
+
+            return Ok(await tickets.ToListAsync());
         }
+
+        //[HttpGet]       // https://domain.com/api/tickets?$filter=id eq 1       // https://domain.com/api/tickets?$filter=id gt 1       
+        //[EnableQuery]   // method 2 to enable data filtering by query - package System.Web.Http.OData; 
+        //public async Task<IActionResult> Get([FromQuery] TicketQueryFilter ticketQueryFilter)
+        //{
+        //    IQueryable<Ticket> tickets = _db.Tickets;
+
+        //    return Ok(await tickets.ToListAsync());
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
