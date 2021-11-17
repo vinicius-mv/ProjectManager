@@ -22,6 +22,11 @@ public class Program
         Console.WriteLine("Reading project tickets...");
         await GetProjectTickets(1);
 
+        Console.WriteLine("///////////////////////////");
+        Console.WriteLine("Creating a Project...");
+        await CreateProject();
+        await GetProjects();
+
         async Task GetProjects()
         {
             ProjectRepository repository = new ProjectRepository(apiExecuter);
@@ -50,6 +55,13 @@ public class Program
             {
                 Console.WriteLine($"    Ticket: {ticket.Title}");
             }
+        }
+
+        async Task<int> CreateProject()
+        {
+            var project  = new Project { Name = "Another project" };
+            ProjectRepository repository  = new ProjectRepository(apiExecuter);
+            return await repository.CreateAsync(project);
         }
     }
 }
