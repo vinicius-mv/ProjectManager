@@ -17,9 +17,19 @@ namespace App.Repository
             _webApiExecuter = webApiExecuter;
         }
 
-        public async Task<IEnumerable<Project>> Get()
+        public async Task<IEnumerable<Project>> GetAsync()
         {
             return await _webApiExecuter.InvokeGet<IEnumerable<Project>>("api/projects"); 
+        }
+
+        public async Task<Project> GetByIdAsync(int id)
+        {
+            return await _webApiExecuter.InvokeGet<Project>($"api/projects/{id}");
+        }
+
+        public async Task<IEnumerable<Ticket>> GetProjectTicketsAsync(int projectId)
+        {
+            return await _webApiExecuter.InvokeGet<IEnumerable<Ticket>>($"api/projects/{projectId}/tickets");
         }
     }
 }
