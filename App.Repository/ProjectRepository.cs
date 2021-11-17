@@ -19,7 +19,7 @@ namespace App.Repository
 
         public async Task<IEnumerable<Project>> GetAsync()
         {
-            return await _webApiExecuter.InvokeGet<IEnumerable<Project>>("api/projects"); 
+            return await _webApiExecuter.InvokeGet<IEnumerable<Project>>("api/projects");
         }
 
         public async Task<Project> GetByIdAsync(int id)
@@ -36,6 +36,11 @@ namespace App.Repository
         {
             project = await _webApiExecuter.InvokePost("api/projects", project);
             return project.ProjectId;
+        }
+
+        public async Task UpdateAsync(Project project)
+        {
+            await _webApiExecuter.InvokePut($"api/projects/{project.ProjectId}", project);
         }
     }
 }
