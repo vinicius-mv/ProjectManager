@@ -42,5 +42,10 @@ namespace App.Repository
         {
             await _webApiExecuter.InvokePut($"api/projects/{project.ProjectId}", project);
         }
+
+        public async Task DeleteAsync(int projectId)
+        {
+            await _webApiExecuter.InvokeDelete($"api/projects/{projectId}");
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace App.Repository.ApiClient
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task InvokeDelete<T>(string uri)
+        public async Task InvokeDelete(string uri)
         {
             var response = await _httpClient.DeleteAsync(GetUrl(uri));
             response.EnsureSuccessStatusCode();

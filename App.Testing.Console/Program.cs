@@ -34,6 +34,12 @@ public class Program
         await UpdateProject(project);
         await GetProjects();
 
+        Console.WriteLine("///////////////////////////");
+        Console.WriteLine("Deleting a Project...");
+        await DeleteProject(projectId);
+        await GetProjects();
+
+
         async Task GetProjects()
         {
             ProjectRepository repository = new ProjectRepository(apiExecuter);
@@ -75,6 +81,12 @@ public class Program
         {
             ProjectRepository repository = new ProjectRepository(apiExecuter);
             await repository.UpdateAsync(project);
+        }
+
+        async Task DeleteProject(int projectId)
+        {
+            ProjectRepository repository = new ProjectRepository(apiExecuter);
+            await repository.DeleteAsync(projectId);
         }
     }
 }
