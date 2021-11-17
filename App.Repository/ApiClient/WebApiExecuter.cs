@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace App.Repository.ApiClient
 {
-    public class WebApiExecutor
+    public class WebApiExecuter : IWebApiExecuter
     {
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
 
-        public WebApiExecutor(string baseUrl, HttpClient httpClient)
+        public WebApiExecuter(string baseUrl, HttpClient httpClient)
         {
             _baseUrl = baseUrl;
             _httpClient = httpClient;
@@ -22,7 +22,7 @@ namespace App.Repository.ApiClient
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<T> Invoke<T>(string uri)
+        public async Task<T> InvokeGet<T>(string uri)
         {
             return await _httpClient.GetFromJsonAsync<T>(GetUrl(uri));
         }
