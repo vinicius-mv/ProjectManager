@@ -30,7 +30,6 @@ public class Program
         Console.WriteLine("///////////////////////////");
         Console.WriteLine("Updating a Project...");
         var project = await GetProject(projectId);
-        project.Name = $"Project {projectId} updated";
         await UpdateProject(project);
         await GetProjects();
 
@@ -72,7 +71,8 @@ public class Program
 
         async Task<int> CreateProject()
         {
-            var project  = new Project { Name = "Another project" };
+            //var project  = new Project { Name = "Another project" };
+            var project  = new Project { };
             ProjectRepository repository  = new ProjectRepository(apiExecuter);
             return await repository.CreateAsync(project);
         }
@@ -80,6 +80,8 @@ public class Program
         async Task UpdateProject(Project project)
         {
             ProjectRepository repository = new ProjectRepository(apiExecuter);
+            //project.Name = $"Project {projectId} updated";
+            project.Name = "";
             await repository.UpdateAsync(project);
         }
 

@@ -30,7 +30,7 @@ namespace App.Repository.ApiClient
         public async Task<T> InvokePost<T>(string uri, T obj)
         {
             var response = await _httpClient.PostAsJsonAsync<T>(GetUrl(uri), obj);
-            response.EnsureSuccessStatusCode();
+            await HandleError(response);
 
             return await response.Content.ReadFromJsonAsync<T>();
         }
@@ -50,6 +50,15 @@ namespace App.Repository.ApiClient
         private string GetUrl(string uri)
         {
             return $"{_baseUrl}/{uri}";
+        }
+
+        private async Task HandleError(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                string error = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException(error);
+            }
         }
     }
 }
