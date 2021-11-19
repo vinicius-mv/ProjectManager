@@ -22,6 +22,11 @@ namespace App.Repository.ApiClient
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        private void SetApiVersion(double apiVersion)
+        {
+            _httpClient.DefaultRequestHeaders.Add("x-api-version", apiVersion.ToString("F1"));
+        }
+
         public async Task<T> InvokeGet<T>(string uri)
         {
             return await _httpClient.GetFromJsonAsync<T>(GetUrl(uri));

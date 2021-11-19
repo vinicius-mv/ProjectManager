@@ -34,11 +34,9 @@ namespace PlatformDemo.Controllers.V2
                 if (ticketQueryFilter.Id.HasValue)
                     tickets = tickets.Where(x => x.TicketId == ticketQueryFilter.Id);
 
-                if (!string.IsNullOrWhiteSpace(ticketQueryFilter.Title))
-                    tickets = tickets.Where(x => x.Title.Contains(ticketQueryFilter.Title, StringComparison.OrdinalIgnoreCase));
-
-                if (!string.IsNullOrWhiteSpace(ticketQueryFilter.Description))
-                    tickets = tickets.Where(x => x.Description.Contains(ticketQueryFilter.Description, StringComparison.OrdinalIgnoreCase));
+                if (!string.IsNullOrWhiteSpace(ticketQueryFilter.TitleOrDescription))
+                    tickets = tickets.Where(x => x.Title.Contains(ticketQueryFilter.TitleOrDescription, StringComparison.OrdinalIgnoreCase) || 
+                        x.Description.Contains(ticketQueryFilter.TitleOrDescription, StringComparison.OrdinalIgnoreCase));
 
             }
 

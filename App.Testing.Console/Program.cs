@@ -14,30 +14,40 @@ public class Program
         HttpClient httpClient = new HttpClient();
         IWebApiExecuter apiExecuter = new WebApiExecuter("https://localhost:5001", httpClient);
 
-        Console.WriteLine("///////////////////////////");
-        Console.WriteLine("Reading projects...");
-        await GetProjects();
+        await TestProjects();
 
-        Console.WriteLine("///////////////////////////");
-        Console.WriteLine("Reading project tickets...");
-        await GetProjectTickets(1);
+        Console.WriteLine("\n\n");
 
-        Console.WriteLine("///////////////////////////");
-        Console.WriteLine("Creating a Project...");
-        var projectId = await CreateProject();
-        await GetProjects();
+        await TestTickets();
 
-        Console.WriteLine("///////////////////////////");
-        Console.WriteLine("Updating a Project...");
-        var project = await GetProject(projectId);
-        await UpdateProject(project);
-        await GetProjects();
+        #region Projects
 
-        Console.WriteLine("///////////////////////////");
-        Console.WriteLine("Deleting a Project...");
-        await DeleteProject(projectId);
-        await GetProjects();
+        async Task TestProjects()
+        {
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Reading projects...");
+            await GetProjects();
 
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Reading project tickets...");
+            await GetProjectTickets(1);
+
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Creating a Project...");
+            var projectId = await CreateProject();
+            await GetProjects();
+
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Updating a Project...");
+            var project = await GetProject(projectId);
+            await UpdateProject(project);
+            await GetProjects();
+
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Deleting a Project...");
+            await DeleteProject(projectId);
+            await GetProjects();
+        }
 
         async Task GetProjects()
         {
@@ -52,7 +62,7 @@ public class Program
 
         async Task<Project> GetProject(int id)
         {
-            ProjectRepository repository = new ProjectRepository(apiExecuter); 
+            ProjectRepository repository = new ProjectRepository(apiExecuter);
             return await repository.GetByIdAsync(id);
         }
 
@@ -71,17 +81,15 @@ public class Program
 
         async Task<int> CreateProject()
         {
-            //var project  = new Project { Name = "Another project" };
-            var project  = new Project { };
-            ProjectRepository repository  = new ProjectRepository(apiExecuter);
+            var project = new Project { Name = "Another project" };
+            ProjectRepository repository = new ProjectRepository(apiExecuter);
             return await repository.CreateAsync(project);
         }
 
         async Task UpdateProject(Project project)
         {
             ProjectRepository repository = new ProjectRepository(apiExecuter);
-            //project.Name = $"Project {projectId} updated";
-            project.Name = "";
+            project.Name = $"Project {project.ProjectId} updated";
             await repository.UpdateAsync(project);
         }
 
@@ -90,5 +98,88 @@ public class Program
             ProjectRepository repository = new ProjectRepository(apiExecuter);
             await repository.DeleteAsync(projectId);
         }
+        #endregion
+
+        #region Tickets
+
+        async Task TestTickets()
+        {
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Reading tickets...");
+            await GetTickets();
+
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Reading tickets contains 1...");
+            await GetTickets("1");
+
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Creating a Ticket...");
+            var ticketId = await CreateTicket();
+            await GetTickets();
+
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Updating a Ticket...");
+            var ticket = await GetTicketById(ticketId);
+            await UpdateTicket(ticket);
+            await GetTickets();
+
+            Console.WriteLine("///////////////////////////");
+            Console.WriteLine("Deleting a Ticket...");
+            await DeleteTicket(ticketId);
+            await GetTickets();
+        }
+
+        async Task GetTickets(string filter = null)
+        {
+            TicketRepository ticketRepository = new TicketRepository(apiExecuter);
+            var tickets = await ticketRepository.GetAsync(filter);
+
+            foreach (var ticket in tickets)
+            {
+                Console.WriteLine($"Ticket: {ticket.Title}");
+            }
+        }
+
+        async Task<Ticket> GetById(int id)
+        {
+            TicketRepository ticketRepository = new TicketRepository(apiExecuter);
+            var ticket = await ticketRepository.GetByIdAsync(id);
+            return ticket;
+        }
+
+        async Task<Ticket> GetTicketById(int id)
+        {
+            TicketRepository ticketRepository = new TicketRepository(apiExecuter);
+            var ticket = await ticketRepository.GetByIdAsync(id);
+            return ticket;
+        }
+
+        async Task<int> CreateTicket()
+        {
+            TicketRepository ticketRepository = new TicketRepository(apiExecuter);
+            return await ticketRepository.CreateAsync(
+                new Ticket
+                {
+                    ProjectId = 2,
+                    Title = "New Ticket",
+                    Description = "Somethigng is wrong on the server"
+                });
+        }
+
+        async Task UpdateTicket(Ticket ticket)
+        {
+            TicketRepository ticketRepository = new TicketRepository(apiExecuter);
+            ticket.Title += " Updated";
+            await ticketRepository.UpdateAsync(ticket);
+        }
+
+        async Task DeleteTicket(int id)
+        {
+            TicketRepository ticketRepository = new TicketRepository(apiExecuter);
+            await ticketRepository.DeleteAsync(id);
+        }
+
+
+        #endregion
     }
 }
