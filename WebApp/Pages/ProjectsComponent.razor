@@ -1,0 +1,24 @@
+﻿@page "/"
+
+@inject IProjectsScreenUseCases projectScreenUseCases;
+
+<h3>Projects</h3>
+
+@if (projects != null)
+{
+    <ul>
+        @foreach (var project in projects)
+        {
+            <li>@project.Name</li>
+        }
+    </ul>
+}
+
+@code {
+    IEnumerable<Project> projects;
+
+    protected override async Task OnInitializedAsync()
+    {
+        projects = await projectScreenUseCases.ViewProjectsAsync();
+    }
+}
