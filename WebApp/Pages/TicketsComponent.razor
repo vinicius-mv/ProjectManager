@@ -18,15 +18,10 @@ Project ID: @ProjectId
             </tr>
         </thead>
         <tbody>
-        @foreach (var ticket in tickets)
-        {
-            <tr>
-                <td>@ticket.Title</td>
-                <td>@ticket.Owner</td>
-                <td>@(ticket.ReportDate?.ToString("yyyy-MM-dd") ?? string.Empty)</td>
-                <td>@(ticket.DueDate?.ToString("yyyy-MM-dd") ?? string.Empty)</td>
-            </tr>
-        }
+            @foreach (var ticket in tickets)
+            {
+                <TicketRowComponent Ticket=ticket />
+            }
         </tbody>
     </table>
 }
