@@ -1,4 +1,4 @@
-﻿using App.Repository.ApiClient;
+﻿using MyApp.Repository.ApiClient;
 using Core.Models;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Repository
+namespace MyApp.Repository
 {
     public class TicketRepository : ITicketRepository
     {

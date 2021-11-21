@@ -1,13 +1,13 @@
-﻿using App.Repository;
+﻿using MyApp.Repository;
 using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace App.ApplicationLogic
+namespace MyApp.ApplicationLogic
 {
     // it's common to call this layer Service, so this class would call ProjectsService
-    public class ProjectsScreenUseCases
+    public class ProjectsScreenUseCases : IProjectsScreenUseCases
     {
         private readonly IProjectRepository _projectRepository;
 
@@ -16,7 +16,7 @@ namespace App.ApplicationLogic
             _projectRepository = projectRepository;
         }
 
-        public async Task<IEnumerable<Project>> ViewProjects()
+        public async Task<IEnumerable<Project>> ViewProjectsAsync()
         {
             return await _projectRepository.GetAsync();
         }
