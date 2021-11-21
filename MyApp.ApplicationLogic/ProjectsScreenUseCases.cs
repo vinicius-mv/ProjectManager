@@ -9,16 +9,16 @@ namespace MyApp.ApplicationLogic
     // it's common to call this layer Service, so this class would call ProjectsService
     public class ProjectsScreenUseCases : IProjectsScreenUseCases
     {
-        private readonly IProjectRepository _projectRepository;
+        private readonly IProjectRepository projectRepository;
 
         public ProjectsScreenUseCases(IProjectRepository projectRepository)
         {
-            _projectRepository = projectRepository;
+            this.projectRepository = projectRepository;
         }
 
         public async Task<IEnumerable<Project>> ViewProjectsAsync()
         {
-            return await _projectRepository.GetAsync();
+            return await projectRepository.GetAsync();
         }
     }
 }

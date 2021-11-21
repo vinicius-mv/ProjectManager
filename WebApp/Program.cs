@@ -20,14 +20,14 @@ namespace WebApp
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddTransient<IProjectsScreenUseCases, ProjectsScreenUseCases>();
-            builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+            builder.Services.AddSingleton<IWebApiExecuter>(sp => new WebApiExecuter("https://localhost:5001", new HttpClient()));
 
-
+            // In Blazor WebAssembly apps, Singleton and Scoped have the same behavior
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            // In Blazor WebAssembly apps, Single and Scoped have the same behavior
-            builder.Services.AddSingleton<IWebApiExecuter>(sp => new WebApiExecuter("https://localhost:5001", new HttpClient()));
+            builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+            builder.Services.AddTransient<IProjectsScreenUseCases, ProjectsScreenUseCases>();
+            builder.Services.AddTransient<ITicketScreenUseCases, TicketScreenUseCases>();
 
             await builder.Build().RunAsync();
         }

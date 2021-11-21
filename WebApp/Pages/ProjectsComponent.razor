@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-@inject IProjectsScreenUseCases projectScreenUseCases;
+@inject IProjectsScreenUseCases ProjectScreenUseCases;
 
 <h3>Projects</h3>
 
@@ -9,7 +9,12 @@
     <ul>
         @foreach (var project in projects)
         {
-            <li>@project.Name</li>
+            <li>
+                <NavLink href=@($"/projects/{project.ProjectId}/tickets")>
+                    @project.Name
+                </NavLink>
+            </li>
+
         }
     </ul>
 }
@@ -19,6 +24,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        projects = await projectScreenUseCases.ViewProjectsAsync();
+        projects = await ProjectScreenUseCases.ViewProjectsAsync();
     }
 }

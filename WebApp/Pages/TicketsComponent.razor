@@ -1,0 +1,46 @@
+﻿@page "/projects/{projectId:int}/tickets"
+
+@inject ITicketScreenUseCases TicketScreenUseCases
+
+<h3>Tickets</h3>
+
+Project ID: @ProjectId
+
+@if (tickets != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Owner</td>
+                <td>Report Date</td>
+                <td>Due Date</td>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var ticket in tickets)
+        {
+            <tr>
+                <td>@ticket.Title</td>
+                <td>@ticket.Owner</td>
+                <td>@(ticket.ReportDate?.ToString("yyyy-MM-dd") ?? string.Empty)</td>
+                <td>@(ticket.DueDate?.ToString("yyyy-MM-dd") ?? string.Empty)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    IEnumerable<Ticket> tickets { get; set; }
+
+    [Parameter]
+    public int ProjectId { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        tickets = await TicketScreenUseCases.ViewTickets(ProjectId);
+    }
+
+}
