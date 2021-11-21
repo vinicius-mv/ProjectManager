@@ -3,6 +3,18 @@
 @inject ITicketScreenUseCases TicketScreenUseCases
 
 <h3>Tickets</h3>
+<br />
+
+<div class="row">
+    <div class="col-auto">
+        @*<input type="text" class="form-control" @bind-value="searchFilter" @bind-value:event="oninput" /> *@
+        <input type="text" class="form-control" @bind-value="searchFilter" />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-light" @onclick="OnSearch">Search</button>
+    </div>
+</div>
+<br />
 
 Project ID: @ProjectId
 
@@ -30,6 +42,8 @@ Project ID: @ProjectId
 
     IEnumerable<Ticket> tickets { get; set; }
 
+    string searchFilter;
+
     [Parameter]
     public int ProjectId { get; set; }
 
@@ -38,4 +52,8 @@ Project ID: @ProjectId
         tickets = await TicketScreenUseCases.ViewTickets(ProjectId);
     }
 
+    private async Task OnSearch()
+    {
+        tickets = await TicketScreenUseCases.SearchTickets(searchFilter);
+    }
 }

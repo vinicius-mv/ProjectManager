@@ -7,5 +7,6 @@ namespace MyApp.ApplicationLogic
     public interface ITicketScreenUseCases
     {
         Task<IEnumerable<Ticket>> ViewTickets(int projectId);
+        Task<IEnumerable<Ticket>> SearchTickets(string filter);
     }
 }
