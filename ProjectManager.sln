@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{2514E4A8-3796-4A97-B6AC-F950635938ED}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStore.EF", "DataStore.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Repository", "App.Repository\App.Repository.csproj", "{2289557E-2DAC-4E1C-83D6-8DEFA0392663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Testing.Console", "App.Testing.Console\App.Testing.Console.csproj", "{76F0306A-6FB4-4F86-A958-FB0447C9A014}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Testing.Console", "App.Testing.Console\App.Testing.Console.csproj", "{76F0306A-6FB4-4F86-A958-FB0447C9A014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.ApplicationLogic", "App.ApplicationLogic\App.ApplicationLogic.csproj", "{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,18 @@ Global
 		{76F0306A-6FB4-4F86-A958-FB0447C9A014}.Release|x64.Build.0 = Release|Any CPU
 		{76F0306A-6FB4-4F86-A958-FB0447C9A014}.Release|x86.ActiveCfg = Release|Any CPU
 		{76F0306A-6FB4-4F86-A958-FB0447C9A014}.Release|x86.Build.0 = Release|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Debug|x64.Build.0 = Debug|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Debug|x86.Build.0 = Debug|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Release|x64.ActiveCfg = Release|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Release|x64.Build.0 = Release|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Release|x86.ActiveCfg = Release|Any CPU
+		{66A29702-F3FC-4F4C-ACB6-CD70A8D22484}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

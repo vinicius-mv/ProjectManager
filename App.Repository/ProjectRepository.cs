@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace App.Repository
 {
-    public class ProjectRepository
+    public class ProjectRepository : IProjectRepository
     {
         private readonly IWebApiExecuter _webApiExecuter;
 
