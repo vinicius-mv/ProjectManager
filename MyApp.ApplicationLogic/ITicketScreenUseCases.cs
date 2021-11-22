@@ -8,5 +8,6 @@ namespace MyApp.ApplicationLogic
     {
         Task<IEnumerable<Ticket>> ViewTickets(int projectId);
         Task<IEnumerable<Ticket>> SearchTickets(string filter);
+        Task<IEnumerable<Ticket>> ViewOwnersTicket(int projectId, string ownerName);
     }
 }
