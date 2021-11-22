@@ -31,19 +31,10 @@ namespace DataStore.EF
                 new Project { ProjectId = 2, Name = "Project 2" });
 
             modelBuilder.Entity<Ticket>().HasData(
-                new Ticket { TicketId = 1, Title = "Bug #1", ProjectId = 1, Owner = "Vinicius", ReportDate = new DateTime(2021, 1, 1), DueDate = new DateTime(2021, 2, 1) },
-                new Ticket { TicketId = 2, Title = "Bug #2", ProjectId = 1, Owner = "Vinicius", ReportDate = new DateTime(2021, 2, 1), DueDate = new DateTime(2021, 3, 1) },
-                new Ticket { TicketId = 3, Title = "Bug #3", ProjectId = 2, Owner = "Vinicius", ReportDate = new DateTime(2021, 3, 1), DueDate = new DateTime(2021, 4, 1) },
-                new Ticket
-                {
-                    TicketId = 4,
-                    Title = "Bug #4",
-                    ProjectId = 2,
-                    Owner = "Vinicius",
-                    Description = "Description blah blah blah Bug 4",
-                    ReportDate = new DateTime(2021, 3, 1),
-                    DueDate = new DateTime(2021, 4, 1)
-                });
+                new Ticket { TicketId = 1, Title = "Bug #1", ProjectId = 1, Description = "not valid input", Owner = "Vinicius", ReportDate = new DateTime(2021, 1, 1), DueDate = new DateTime(2021, 2, 1) },
+                new Ticket { TicketId = 2, Title = "Bug #2", ProjectId = 1, Description = "database exception", Owner = "Frank", ReportDate = new DateTime(2021, 2, 1), DueDate = new DateTime(2021, 3, 1) },
+                new Ticket { TicketId = 3, Title = "Bug #3", ProjectId = 2, Description = "page not found", Owner = "Vinicius", ReportDate = new DateTime(2021, 3, 1), DueDate = new DateTime(2021, 4, 1) },
+                new Ticket { TicketId = 4, Title = "Bug #4", ProjectId = 2, Description = "bad index", Owner = "Frank", ReportDate = new DateTime(2021, 3, 1), DueDate = new DateTime(2021, 4, 1) });
         }
     }
 }

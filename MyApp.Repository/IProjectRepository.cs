@@ -12,5 +12,6 @@ namespace MyApp.Repository
         Task<Project> GetByIdAsync(int id);
         Task<IEnumerable<Ticket>> GetProjectTicketsAsync(int projectId);
         Task UpdateAsync(Project project);
+        Task<IEnumerable<Ticket>> GetProjectTicketsAsync(int projectId, string ownerName = null);
     }
 }
