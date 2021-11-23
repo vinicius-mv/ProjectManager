@@ -1,0 +1,30 @@
+﻿
+<div class="alert alert-danger" 
+    style='@($"display: {display}")'
+    role="alert">
+    @ErrorMessage
+    <button type="button" 
+        @onclick="Dismiss"
+        class="close" data-data-dismiss="alert" aria-label="Close">
+        <span aria-aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+@code {
+    private string display = "none";
+
+    public string ErrorMessage { get; set; }
+
+    public void Show()
+    {
+        display = "block";
+        //this method is not an event handle, thus we need to trigger the component reload manually
+        StateHasChanged();
+    }
+
+    public void Dismiss()
+    {
+        display = "none";
+        ErrorMessage = string.Empty;
+    }
+}
