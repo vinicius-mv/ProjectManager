@@ -1,7 +1,7 @@
 ﻿@page "/tickets/{ticketId:int}"
 
 @inject NavigationManager NavigationManager;
-@inject ITicketsScreenUseCases TicketsScreenUseCases;
+@inject ITicketScreenUseCases TicketScreenUseCases;
 
 <h3>Ticket</h3>
 <br />
@@ -53,7 +53,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        ticket = await TicketsScreenUseCases.ViewTicketById(TicketId);
+        ticket = await TicketScreenUseCases.ViewTicketById(TicketId);
     }
 
     private void Save()
@@ -98,7 +98,7 @@
             return;
         };
 
-        TicketsScreenUseCases.UpdateTicket(ticket);
+        TicketScreenUseCases.UpdateTicket(ticket);
         NavigationManager.NavigateTo($"/projects/{ticket.ProjectId}/tickets");
     }
 }

@@ -1,15 +1,12 @@
 ﻿using Core.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyApp.ApplicationLogic
 {
-    public interface ITicketsScreenUseCases
+    public interface ITicketScreenUseCases
     {
-        Task<IEnumerable<Ticket>> ViewTickets(int projectId);
-        Task<IEnumerable<Ticket>> SearchTickets(string filter);
-        Task<IEnumerable<Ticket>> ViewOwnerTickets(int projectId, string ownerName);
-        Task<Ticket> ViewTicketById(int ticketId);
+        Task<int> AddTicket(Ticket ticket);
         Task UpdateTicket(Ticket ticket);
+        Task<Ticket> ViewTicketById(int ticketId);
     }
 }
