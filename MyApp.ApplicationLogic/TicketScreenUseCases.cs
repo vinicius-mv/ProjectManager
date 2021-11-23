@@ -35,9 +35,19 @@ namespace MyApp.ApplicationLogic
             return await ticketRepository.GetAsync(filter);
         }
 
-        public async Task<IEnumerable<Ticket>> ViewOwnersTicket(int projectId, string ownerName)
+        public async Task<IEnumerable<Ticket>> ViewOwnerTickets(int projectId, string ownerName)
         {
             return await this.projectRepository.GetProjectTicketsAsync(projectId, ownerName);
+        }
+
+        public async Task<Ticket> ViewTicketById(int ticketId)
+        {
+            return await ticketRepository.GetByIdAsync(ticketId);
+        }
+
+        public async Task UpdateTicket(Ticket ticket)
+        {
+            await ticketRepository.UpdateAsync(ticket);
         }
     }
 }
