@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStore.EF", "DataStore.EF\DataStore.EF.csproj", "{604E99D0-C51A-4F0F-9A08-4660D0351E7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{AAE4ECA1-42EA-49FF-897A-8FD96C0FD89C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{AAE4ECA1-42EA-49FF-897A-8FD96C0FD89C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApp.ApplicationLogic", "MyApp.ApplicationLogic\MyApp.ApplicationLogic.csproj", "{04790FE1-D049-4558-99E0-C14619CEC816}"
 EndProject
