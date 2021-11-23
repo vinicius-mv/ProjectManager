@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MyApp.ApplicationLogic
 {
-    public interface ITicketScreenUseCases
+    public interface ITicketsScreenUseCases
     {
         Task<IEnumerable<Ticket>> ViewTickets(int projectId);
         Task<IEnumerable<Ticket>> SearchTickets(string filter);
