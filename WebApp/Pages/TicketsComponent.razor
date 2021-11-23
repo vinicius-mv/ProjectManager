@@ -62,7 +62,7 @@ Project ID: @ProjectId
             {
                 IEnumerable<Ticket> newTickets = Enumerable.Empty<Ticket>();
                 if (viewMyTickets)
-                    tickets = await TicketScreenUseCases.ViewOwnersTicket(ProjectId, "Frank");
+                    tickets = await TicketScreenUseCases.ViewOwnerTickets(ProjectId, "Frank");
                 else
                     tickets = await TicketScreenUseCases.ViewTickets(ProjectId);
 
