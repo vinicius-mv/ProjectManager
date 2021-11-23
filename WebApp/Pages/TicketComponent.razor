@@ -1,9 +1,12 @@
 ﻿@page "/tickets/{ticketId:int}"
 
+@inject NavigationManager NavigationManager;
 @inject ITicketsScreenUseCases TicketsScreenUseCases;
 
 <h3>Ticket</h3>
 <br />
+
+<AlertComponent @ref="alertComponent"></AlertComponent>
 
 @if (ticket != null)
 {
@@ -39,10 +42,14 @@
 }
 
 @code {
+
+    private Ticket ticket { get; set; }
+
+    private AlertComponent alertComponent;
+
     [Parameter]
     public int TicketId { get; set; }
 
-    private Ticket ticket { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -51,7 +58,47 @@
 
     private void Save()
     {
-        // TODO
+        bool isValid = true;
 
+        if (!ticket.ValidateDescription())
+        {
+            alertComponent.ErrorMessage = "The Description is required";
+            isValid = false;
+        }
+
+        if(!ticket.ValidateDueDatePresence())
+        {
+            alertComponent.ErrorMessage = "The Due Date is required";
+            isValid = false;
+
+        }
+
+        if(!ticket.ValidateFutureDueDate())
+        {
+            alertComponent.ErrorMessage = "The Due Date must be in the future";
+            isValid = false;
+        }
+
+
+        if(!ticket.ValidateReportDatePresence())
+        {
+            alertComponent.ErrorMessage = "The Report Date is required";
+            isValid = false;
+        }
+
+        if(!ticket.ValidateDueDateAfterReportDate())
+        {
+            alertComponent.ErrorMessage = "The Due Date must be adfter Report Date";
+            isValid = false;
+        }
+
+        if(!isValid)
+        {
+            alertComponent.Show();
+            return;
+        };
+
+        TicketsScreenUseCases.UpdateTicket(ticket);
+        NavigationManager.NavigateTo($"/projects/{ticket.ProjectId}/tickets");
     }
 }
