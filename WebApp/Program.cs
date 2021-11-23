@@ -28,7 +28,7 @@ namespace WebApp
             builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
             builder.Services.AddTransient<ITicketRepository, TicketRepository>();
             builder.Services.AddTransient<IProjectsScreenUseCases, ProjectsScreenUseCases>();
-            builder.Services.AddTransient<ITicketScreenUseCases, TicketScreenUseCases>();
+            builder.Services.AddTransient<ITicketsScreenUseCases, TicketScreenUseCases>();
 
             await builder.Build().RunAsync();
         }

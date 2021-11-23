@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyApp.ApplicationLogic
 {
-    public class TicketScreenUseCases : ITicketScreenUseCases
+    public class TicketScreenUseCases : ITicketsScreenUseCases
     {
         private readonly IProjectRepository projectRepository;
         private readonly ITicketRepository ticketRepository;

@@ -1,12 +1,57 @@
 ﻿@page "/tickets/{ticketId:int}"
 
-<h3>Ticket</h3>
+@inject ITicketsScreenUseCases TicketsScreenUseCases;
 
-<p>
-    Ticket: @TicketId
-</p>
+<h3>Ticket</h3>
+<br />
+
+@if (ticket != null)
+{
+    <EditForm Model="ticket" OnValidSubmit="Save">
+
+        <DataAnnotationsValidator></DataAnnotationsValidator> @*Automatically triggers Annotations Validation*@
+        <ValidationSummary></ValidationSummary>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <InputText class="form-control" id="title" @bind-Value="ticket.Title"></InputText>
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Description</label>
+            <InputText class="form-control" id="description" @bind-Value="ticket.Description"></InputText>
+        </div>
+        <div class="mb-3">
+            <label for="owner" class="form-label">Owner</label>
+            <InputText class="form-control" id="owner" @bind-Value="ticket.Owner" readonly></InputText>
+        </div>
+        <div class="mb-3">
+            <label for="report-date" class="form-label">Report Date</label>
+            <InputDate class="form-control" id="report-date" @bind-Value="ticket.ReportDate"></InputDate>
+        </div>
+        <div class="mb-3">
+            <label for="due-date" class="form-label">Due Date</label>
+            <InputDate class="form-control" id="due-date" @bind-Value="ticket.DueDate"></InputDate>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+
+    </EditForm>
+}
 
 @code {
     [Parameter]
     public int TicketId { get; set; }
+
+    private Ticket ticket { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        ticket = await TicketsScreenUseCases.ViewTicketById(TicketId);
+    }
+
+    private void Save()
+    {
+        // TODO
+
+    }
 }
