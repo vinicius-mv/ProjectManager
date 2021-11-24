@@ -13,17 +13,17 @@ namespace MyApp.ApplicationLogic
             this.ticketRepository = ticketRepository;
         }
 
-        public async Task<int> AddTicket(Ticket ticket)
+        public async Task<int> AddTicketAsync(Ticket ticket)
         {
             return await ticketRepository.CreateAsync(ticket);
         }
 
-        public async Task<Ticket> ViewTicketById(int ticketId)
+        public async Task<Ticket> ViewTicketByIdAsync(int ticketId)
         {
             return await ticketRepository.GetByIdAsync(ticketId);
         }
 
-        public async Task UpdateTicket(Ticket ticket)
+        public async Task UpdateTicketAsync(Ticket ticket)
         {
             await ticketRepository.UpdateAsync(ticket);
         }

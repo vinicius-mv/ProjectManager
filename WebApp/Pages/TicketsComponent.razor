@@ -1,5 +1,6 @@
 ﻿@page "/projects/{projectId:int}/tickets"
 
+@inject NavigationManager NavigationManager;
 @inject ITicketsScreenUseCases TicketScreenUseCases
 
 <h3>Tickets</h3>
@@ -42,6 +43,7 @@ Project ID: @ProjectId
             }
         </tbody>
     </table>
+    <button class="btn alert-primary" @onclick="AddTicket">Add Ticket</button>
 }
 
 @code {
@@ -62,9 +64,9 @@ Project ID: @ProjectId
             {
                 IEnumerable<Ticket> newTickets = Enumerable.Empty<Ticket>();
                 if (viewMyTickets)
-                    tickets = await TicketScreenUseCases.ViewOwnerTickets(ProjectId, "Frank");
+                    tickets = await TicketScreenUseCases.ViewOwnerTicketsAsync(ProjectId, "Frank");
                 else
-                    tickets = await TicketScreenUseCases.ViewTickets(ProjectId);
+                    tickets = await TicketScreenUseCases.ViewTicketsAsync(ProjectId);
 
                 StateHasChanged();
             });
@@ -76,11 +78,16 @@ Project ID: @ProjectId
 
     protected override async Task OnParametersSetAsync()
     {
-        tickets = await TicketScreenUseCases.ViewTickets(ProjectId);
+        tickets = await TicketScreenUseCases.ViewTicketsAsync(ProjectId);
     }
 
     private async Task OnSearch()
     {
-        tickets = await TicketScreenUseCases.SearchTickets(searchFilter);
+        tickets = await TicketScreenUseCases.SearchTicketsAsync(searchFilter);
+    }
+
+    private void AddTicket()
+    {
+        NavigationManager.NavigateTo($"/projects/{ProjectId}/addticket");
     }
 }

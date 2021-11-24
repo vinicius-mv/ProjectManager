@@ -19,12 +19,12 @@ namespace MyApp.ApplicationLogic
             this.ticketRepository = ticketRepository;
         }
 
-        public async Task<IEnumerable<Ticket>> ViewTickets(int projectId)
+        public async Task<IEnumerable<Ticket>> ViewTicketsAsync(int projectId)
         {
             return await projectRepository.GetProjectTicketsAsync(projectId);
         }
 
-        public async Task<IEnumerable<Ticket>> SearchTickets(string filter)
+        public async Task<IEnumerable<Ticket>> SearchTicketsAsync(string filter)
         {
             if (int.TryParse(filter, out int ticketId))
             {
@@ -35,7 +35,7 @@ namespace MyApp.ApplicationLogic
             return await ticketRepository.GetAsync(filter);
         }
 
-        public async Task<IEnumerable<Ticket>> ViewOwnerTickets(int projectId, string ownerName)
+        public async Task<IEnumerable<Ticket>> ViewOwnerTicketsAsync(int projectId, string ownerName)
         {
             return await this.projectRepository.GetProjectTicketsAsync(projectId, ownerName);
         }
