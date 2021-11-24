@@ -5,8 +5,8 @@ namespace MyApp.ApplicationLogic
 {
     public interface ITicketScreenUseCases
     {
-        Task<int> AddTicket(Ticket ticket);
-        Task UpdateTicket(Ticket ticket);
-        Task<Ticket> ViewTicketById(int ticketId);
+        Task<int> AddTicketAsync(Ticket ticket);
+        Task UpdateTicketAsync(Ticket ticket);
+        Task<Ticket> ViewTicketByIdAsync(int ticketId);
     }
 }

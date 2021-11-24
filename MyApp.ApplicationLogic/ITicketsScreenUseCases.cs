@@ -6,8 +6,8 @@ namespace MyApp.ApplicationLogic
 {
     public interface ITicketsScreenUseCases
     {
-        Task<IEnumerable<Ticket>> SearchTickets(string filter);
-        Task<IEnumerable<Ticket>> ViewOwnerTickets(int projectId, string ownerName);
-        Task<IEnumerable<Ticket>> ViewTickets(int projectId);
+        Task<IEnumerable<Ticket>> SearchTicketsAsync(string filter);
+        Task<IEnumerable<Ticket>> ViewOwnerTicketsAsync(int projectId, string ownerName);
+        Task<IEnumerable<Ticket>> ViewTicketsAsync(int projectId);
     }
 }
