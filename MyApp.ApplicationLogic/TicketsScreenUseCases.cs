@@ -37,7 +37,7 @@ namespace MyApp.ApplicationLogic
 
         public async Task<IEnumerable<Ticket>> ViewOwnerTicketsAsync(int projectId, string ownerName)
         {
-            return await this.projectRepository.GetProjectTicketsAsync(projectId, ownerName);
+            return await projectRepository.GetProjectTicketsAsync(projectId, ownerName);
         }
     }
 }

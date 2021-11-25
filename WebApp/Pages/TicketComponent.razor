@@ -16,33 +16,37 @@
         <DataAnnotationsValidator></DataAnnotationsValidator> @*Automatically triggers Annotations Validation*@
         <ValidationSummary></ValidationSummary>
 
-        <div class="mb-3">
+        <div class="form-row mb-3">
             <label for="title" class="form-label">Title</label>
             <InputText class="form-control" id="title" @bind-Value="ticket.Title"></InputText>
         </div>
-        <div class="mb-3">
+        <div class="form-row mb-3">
             <label for="title" class="form-label">Description</label>
             <InputText class="form-control" id="description" @bind-Value="ticket.Description"></InputText>
         </div>
-        <div class="mb-3">
+        <div class="form-row mb-3">
             <label for="owner" class="form-label">Owner</label>
             <InputText class="form-control" id="owner" @bind-Value="ticket.Owner" readonly></InputText>
         </div>
-        <div class="mb-3">
+        <div class="form-row mb-3">
             <label for="report-date" class="form-label">Report Date</label>
             <InputDate class="form-control" id="report-date" @bind-Value="ticket.ReportDate"></InputDate>
         </div>
-        <div class="mb-3">
+        <div class="form-row mb-3">
             <label for="due-date" class="form-label">Due Date</label>
             <InputDate class="form-control" id="due-date" @bind-Value="ticket.DueDate"></InputDate>
         </div>
 
-        <button class="btn btn-primary" type="submit">Save</button>
+        <div class="form-row mb-3">
+            <button class="btn btn-outline-primary mr-2" type="submit">Save</button>
+            <button class="btn btn-outline-danger" type="button" @onclick="Delete" style='display: @(isEditing ? "block" : "none")'>Delete</button>
+        </div>
 
     </EditForm>
 }
 
 @code {
+    private bool isEditing = false;
 
     private Ticket ticket { get; set; }
 
@@ -57,7 +61,10 @@
     protected override async Task OnParametersSetAsync()
     {
         if (TicketId.HasValue)
+        {
             ticket = await TicketScreenUseCases.ViewTicketByIdAsync(TicketId.Value);
+            isEditing = true;
+        }
 
         if (ProjectId.HasValue && ticket == null)
             ticket = new Ticket() { ProjectId = this.ProjectId.Value };
@@ -77,7 +84,6 @@
         {
             alertComponent.ErrorMessage = "The Due Date is required";
             isValid = false;
-
         }
 
         if (!ticket.ValidateFutureDueDate())
@@ -85,7 +91,6 @@
             alertComponent.ErrorMessage = "The Due Date must be in the future";
             isValid = false;
         }
-
 
         if (!ticket.ValidateReportDatePresence())
         {
@@ -109,6 +114,16 @@
             await TicketScreenUseCases.UpdateTicketAsync(ticket);
         else
             await TicketScreenUseCases.AddTicketAsync(ticket);
+
+        NavigationManager.NavigateTo($"/projects/{ticket.ProjectId}/tickets");
+    }
+
+    private async void Delete()
+    {
+        if (!TicketId.HasValue)
+            return;
+
+        await TicketScreenUseCases.DeleteTicketAsync(TicketId.Value);
 
         NavigationManager.NavigateTo($"/projects/{ticket.ProjectId}/tickets");
     }

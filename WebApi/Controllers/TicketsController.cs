@@ -78,7 +78,7 @@ namespace PlatformDemo.Controllers
             _db.Tickets.Remove(ticket);
             await _db.SaveChangesAsync();
 
-            return Ok(ticket);
+            return Ok();
         }
     }
 }
