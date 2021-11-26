@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Filters;
 using WebApi.Filters.V2;
 using WebApi.QueryFilters;
 
@@ -12,6 +13,7 @@ using WebApi.QueryFilters;
 
 namespace PlatformDemo.Controllers.V2
 {
+    [ApiKeyAuthFilter]
     [ApiVersion("2.0")]
     [ApiController]
     [Route("api/tickets")]

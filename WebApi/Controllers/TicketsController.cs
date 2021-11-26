@@ -5,12 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Filters;
 
 namespace PlatformDemo.Controllers
 {
+    [ApiKeyAuthFilter]
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api/[controller]")]
+
     public class TicketsController : ControllerBase
     {
         private readonly BugTrackerContext _db;
