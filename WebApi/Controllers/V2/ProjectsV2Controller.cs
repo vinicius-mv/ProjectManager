@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Filters;
 using WebApi.QueryFilters;
 
 namespace PlatformDemo.Controllers
 {
+    [ApiKeyAuthFilter]
     [ApiVersion("2.0")]
     [ApiController]
     [Route("api/projects")]
