@@ -22,8 +22,9 @@ namespace WebApp
 
             builder.Services.AddSingleton<IWebApiExecuter>(sp =>
                 new WebApiExecuter("https://localhost:5001",
-                new HttpClient(),
-                "secretKey123")); // hard coded key -> not secure for client side applications (Blazor Wasm), but it's ok for server side application (e.g. Blazor Server)
+                    new HttpClient(),
+                    "blazorwasm", // clientId
+                    "secretKey123-blazorwasm")); // hard coded key (related to the clientId) -> not secure for client side applications (Blazor Wasm), but it's ok for server side application (e.g. Blazor Server)
 
             // In Blazor WebAssembly apps, Singleton and Scoped have the same behavior
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
