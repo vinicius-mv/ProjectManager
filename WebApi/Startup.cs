@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using WebApi.Controllers.Auth;
 
 namespace PlatformDemo
 {
@@ -63,6 +64,9 @@ namespace PlatformDemo
                         .AllowAnyMethod();
                 });
             });
+
+            services.AddSingleton<ICustomTokenManager, CustomTokenManager>();
+            services.AddSingleton<ICustomUserManager, CustomUserManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
