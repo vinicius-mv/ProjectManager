@@ -8,7 +8,8 @@ using WebApi.Filters;
 
 namespace PlatformDemo.Controllers
 {
-    [ApiKeyAuthFilter]
+    //[ApiKeyAuthFilter]
+    [CustomTokenAuthFilter]
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api/[controller]")]

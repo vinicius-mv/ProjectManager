@@ -15,16 +15,22 @@ namespace WebApi.Controllers.Auth
             this.customTokenManager = customTokenManager;
         }
 
+        [HttpPost]
+        [Route("authenticate")]
         public async Task<string> AuthenticateAsync(string username, string password)
         {
             return await Task.FromResult(customUserManager.Authenticate(username, password));
         }
 
+        [HttpGet]
+        [Route("verifytoken")]
         public async Task<bool> VerifyAsync(string token)
         {
             return await Task.FromResult(customTokenManager.VerifyToken(token));
         }
 
+        [HttpGet]
+        [Route("getuserinfo")]
         public async Task<string> GetUserInfoByTokenAsync(string token)
         {
             return await Task.FromResult(customTokenManager.GetUserInfoByToken(token));
