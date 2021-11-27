@@ -13,12 +13,13 @@ namespace MyApp.Repository.ApiClient
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
 
-        public WebApiExecuter(string baseUrl, HttpClient httpClient, string apiKey)
+        public WebApiExecuter(string baseUrl, HttpClient httpClient, string clientId, string apiKey)
         {
             _baseUrl = baseUrl;
             _httpClient = httpClient;
 
             _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Add("ClientId", clientId);
             _httpClient.DefaultRequestHeaders.Add("ApiKey", apiKey);
 
             _httpClient.DefaultRequestHeaders.Accept.Clear();
