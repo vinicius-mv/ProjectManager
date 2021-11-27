@@ -10,7 +10,8 @@ using WebApi.QueryFilters;
 
 namespace PlatformDemo.Controllers
 {
-    [ApiKeyAuthFilter]
+    //[ApiKeyAuthFilter]
+    [CustomTokenAuthFilter]
     [ApiVersion("2.0")]
     [ApiController]
     [Route("api/projects")]

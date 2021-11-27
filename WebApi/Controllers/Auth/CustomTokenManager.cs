@@ -13,7 +13,7 @@ namespace WebApi.Controllers.Auth
 
             tokens.Add(token);
 
-            return string.Empty;
+            return token.TokenString;
         }
 
         public bool VerifyToken(string token)

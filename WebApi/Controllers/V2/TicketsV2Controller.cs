@@ -13,7 +13,8 @@ using WebApi.QueryFilters;
 
 namespace PlatformDemo.Controllers.V2
 {
-    [ApiKeyAuthFilter]
+    //[ApiKeyAuthFilter]
+    [CustomTokenAuthFilter]
     [ApiVersion("2.0")]
     [ApiController]
     [Route("api/tickets")]

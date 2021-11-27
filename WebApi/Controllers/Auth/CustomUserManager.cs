@@ -7,7 +7,7 @@ namespace WebApi.Controllers.Auth
         // in memory storage (simplified)
         private Dictionary<string, string> credentials = new Dictionary<string, string>
         {
-            { "frank", "passoword" },
+            { "frank", "password" },
             { "tom", "password1" }
         };
 
