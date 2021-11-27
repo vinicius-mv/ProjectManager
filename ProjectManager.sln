@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApp.ApplicationLogic", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApp.Repository", "MyApp.Repository\MyApp.Repository.csproj", "{7D22F14A-A9E0-4297-B6BC-4BD42D57B111}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApp.Testing.Console", "MyApp.Testing.Console\MyApp.Testing.Console.csproj", "{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,18 +97,6 @@ Global
 		{7D22F14A-A9E0-4297-B6BC-4BD42D57B111}.Release|x64.Build.0 = Release|Any CPU
 		{7D22F14A-A9E0-4297-B6BC-4BD42D57B111}.Release|x86.ActiveCfg = Release|Any CPU
 		{7D22F14A-A9E0-4297-B6BC-4BD42D57B111}.Release|x86.Build.0 = Release|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Debug|x64.Build.0 = Debug|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Debug|x86.Build.0 = Debug|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Release|x64.ActiveCfg = Release|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Release|x64.Build.0 = Release|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Release|x86.ActiveCfg = Release|Any CPU
-		{8CA1A3C8-90B4-40F1-A7D6-889BF9963B79}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
