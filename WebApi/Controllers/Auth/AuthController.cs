@@ -17,9 +17,9 @@ namespace WebApi.Controllers.Auth
 
         [HttpPost]
         [Route("authenticate")]
-        public async Task<string> AuthenticateAsync(string username, string password)
+        public async Task<string> AuthenticateAsync(UserCredential userCredential)
         {
-            return await Task.FromResult(customUserManager.Authenticate(username, password));
+            return await Task.FromResult(customUserManager.Authenticate(userCredential.UserName, userCredential.Password));
         }
 
         [HttpGet]

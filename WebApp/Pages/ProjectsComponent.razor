@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject IProjectsScreenUseCases ProjectScreenUseCases;
+@inject IAuthenticationUseCases AuthenticationUseCases;
 
 <h3>Projects</h3>
 
@@ -19,11 +20,17 @@
     </ul>
 }
 
+Token: @token;
+
 @code {
     IEnumerable<Project> projects;
 
+    string token;
+
     protected override async Task OnInitializedAsync()
     {
+        token = await AuthenticationUseCases.LoginAsync("frank", "password");
+        Console.WriteLine(token);
         projects = await ProjectScreenUseCases.ViewProjectsAsync();
     }
 }
