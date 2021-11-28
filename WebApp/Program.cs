@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,8 +21,11 @@ namespace WebApp
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddSingleton<ITokenRepository, TokenRepository>(); // works as a datastore
+            builder.Services.AddOptions();
+            builder.Services.AddAuthorizationCore();
+            builder.Services.AddSingleton<AuthenticationStateProvider, CustomTokenAuthenticationStateProvider>();
 
+            builder.Services.AddSingleton<ITokenRepository, TokenRepository>(); // works as a datastore
             builder.Services.AddSingleton<IWebApiExecuter>(sp =>
                 new WebApiExecuter("https://localhost:5001",
                 new HttpClient(),
