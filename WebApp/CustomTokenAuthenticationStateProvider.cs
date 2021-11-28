@@ -8,7 +8,7 @@ namespace WebApp
     {
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var userName = "";
+            var userName = "Frank";
             if (string.IsNullOrWhiteSpace(userName))
             {
                 return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))); // empty claims principal
