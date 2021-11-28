@@ -20,15 +20,18 @@ namespace WebApp
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
+            builder.Services.AddSingleton<ITokenRepository, TokenRepository>(); // works as a datastore
+
             builder.Services.AddSingleton<IWebApiExecuter>(sp =>
                 new WebApiExecuter("https://localhost:5001",
-                    new HttpClient(),
-                    "blazorwasm", // clientId
-                    "secretKey123-blazorwasm")); // hard coded key (related to the clientId) -> not secure for client side applications (Blazor Wasm), but it's ok for server side application (e.g. Blazor Server)
+                new HttpClient(),
+                sp.GetRequiredService<ITokenRepository>()));
 
             // In Blazor WebAssembly apps, Singleton and Scoped have the same behavior
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            builder.Services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
+            builder.Services.AddTransient<IAuthenticationUseCases, AuthenticationUseCases>();
             builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
             builder.Services.AddTransient<ITicketRepository, TicketRepository>();
             builder.Services.AddTransient<IProjectsScreenUseCases, ProjectsScreenUseCases>();
