@@ -29,7 +29,7 @@ namespace WebApi.Controllers.Auth
             return await Task.FromResult(customTokenManager.VerifyToken(token));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("getuserinfo")]
         public async Task<string> GetUserInfoByTokenAsync(string token)
         {

@@ -21,7 +21,11 @@ namespace MyApp.Repository
         public async Task<string> LoginAsync(string userName, string password)
         {
             var token = await this.webApiExecuter.InvokePostReturnStringAsync("authenticate", new { UserName = userName, Password = password });
-            tokenRepository.Token = token;
+            await tokenRepository.SetToken(token);
+
+            if(string.IsNullOrWhiteSpace(token) || token == "\"\"") 
+                return null;
+
             return token;
         }
 

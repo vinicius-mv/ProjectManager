@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
+using MyApp.Repository;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -6,12 +7,22 @@ namespace WebApp
 {
     public class CustomTokenAuthenticationStateProvider : AuthenticationStateProvider
     {
-        public override Task<AuthenticationState> GetAuthenticationStateAsync()
+        private readonly ITokenRepository tokenRepository;
+        private readonly IAuthenticationRepository authenticationRepository;
+
+        public CustomTokenAuthenticationStateProvider(ITokenRepository tokenRepository, IAuthenticationRepository authenticationRepository)
         {
-            var userName = "Frank";
+            this.tokenRepository = tokenRepository;
+            this.authenticationRepository = authenticationRepository;
+        }
+
+        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+        {
+            var userName = await authenticationRepository.GetUserInfoAsync(await tokenRepository.GetToken());
+
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))); // empty claims principal
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
 
             // ClaimsPrincipal -< ClaimsIdentity -< Claims
@@ -19,7 +30,7 @@ namespace WebApp
             var identity = new ClaimsIdentity(new[] { claim }, "Custom Token Auth");
             var principal = new ClaimsPrincipal(identity);
 
-            return Task.FromResult(new AuthenticationState(principal));
+            return new AuthenticationState(principal);
         }
     }
 }
