@@ -1,6 +1,8 @@
 ﻿@page "/tickets/{ticketId:int}"
 @page "/projects/{projectId:int}/addticket"
 
+@attribute [Authorize]
+
 @inject NavigationManager NavigationManager;
 @inject ITicketScreenUseCases TicketScreenUseCases;
 
