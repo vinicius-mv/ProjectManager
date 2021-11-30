@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@attribute [Authorize]
+
 @inject IProjectsScreenUseCases ProjectScreenUseCases;
 @inject IAuthenticationUseCases AuthenticationUseCases;
 
@@ -29,8 +31,6 @@ Token: @token;
 
     protected override async Task OnInitializedAsync()
     {
-        token = await AuthenticationUseCases.LoginAsync("frank", "password");
-        Console.WriteLine(token);
         projects = await ProjectScreenUseCases.ViewProjectsAsync();
     }
 }

@@ -29,7 +29,6 @@ namespace WebApp
             var claim = new Claim(ClaimTypes.Name, userName);
             var identity = new ClaimsIdentity(new[] { claim }, "Custom Token Auth");
             var principal = new ClaimsPrincipal(identity);
-
             return new AuthenticationState(principal);
         }
     }
