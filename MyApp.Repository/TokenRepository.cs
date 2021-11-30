@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,21 @@ namespace MyApp.Repository
 {
     public class TokenRepository : ITokenRepository
     {
-        public string Token { get; set; }
+        private readonly IJSRuntime jSRuntime;
+
+        public TokenRepository(IJSRuntime jSRuntime)
+        {
+            this.jSRuntime = jSRuntime;
+        }
+
+        public async Task SetToken(string token)
+        {
+            await jSRuntime.InvokeVoidAsync("sessionStorage.setItem", "token", token);
+        }
+
+        public async Task<string> GetToken()
+        {
+            return await jSRuntime.InvokeAsync<string>("sessionStorage.getItem", "token");
+        }
     }
 }
