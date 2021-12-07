@@ -16,14 +16,17 @@ namespace MyApp.Repository
             this.jSRuntime = jSRuntime;
         }
 
-        public async Task SetToken(string token)
+        public async Task SetTokenAsync(string token)
         {
             await jSRuntime.InvokeVoidAsync("sessionStorage.setItem", "token", token);
         }
 
-        public async Task<string> GetToken()
+        public async Task<string> GetTokenAsync()
         {
-            return await jSRuntime.InvokeAsync<string>("sessionStorage.getItem", "token");
+            string token = await jSRuntime.InvokeAsync<string>("sessionStorage.getItem", "token");
+            token = token?.Replace("\"", "", StringComparison.Ordinal);
+
+            return token;
         }
     }
 }

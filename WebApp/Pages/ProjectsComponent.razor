@@ -6,6 +6,7 @@
 @inject IAuthenticationUseCases AuthenticationUseCases;
 
 <h3>Projects</h3>
+<br />
 
 @if (projects != null)
 {
@@ -22,15 +23,21 @@
     </ul>
 }
 
-Token: @token;
+Token: @token
+Username: @userName
 
 @code {
     IEnumerable<Project> projects;
-
     string token;
+    string userName;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         projects = await ProjectScreenUseCases.ViewProjectsAsync();
+        var state = await AuthenticationState;
+        userName = state.User.Identity.Name;
     }
 }

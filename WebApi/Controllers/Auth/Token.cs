@@ -8,7 +8,7 @@ namespace WebApi.Controllers.Auth
         {
             this.UserName = userName;
             this.TokenString = Guid.NewGuid().ToString();
-            this.ExpiryDate = DateTime.Now.AddMinutes(1);
+            this.ExpiryDate = DateTime.Now.AddMinutes(300);
         }
 
         public string TokenString { get; }

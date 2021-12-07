@@ -4,7 +4,7 @@ namespace MyApp.Repository
 {
     public interface ITokenRepository
     {
-        Task<string> GetToken();
-        Task SetToken(string token);
+        Task<string> GetTokenAsync();
+        Task SetTokenAsync(string token);
     }
 }

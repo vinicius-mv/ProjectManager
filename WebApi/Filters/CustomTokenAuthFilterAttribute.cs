@@ -18,7 +18,7 @@ namespace WebApi.Filters
             }
 
             var tokenManager = context.HttpContext.RequestServices.GetService(typeof(ICustomTokenManager)) as ICustomTokenManager;
-            if(tokenManager == null && tokenManager.VerifyToken(token))
+            if(tokenManager == null || !tokenManager.VerifyToken(token))
             {
                 context.Result = new UnauthorizedResult();
                 return;
