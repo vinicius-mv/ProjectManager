@@ -14,7 +14,7 @@
         <input type="text" class="form-control" @bind-value="searchFilter" />
     </div>
     <div class="col-auto">
-        <button class="btn btn-light" @onclick="OnSearch">Search</button>
+        <button class="btn btn-light" @onclick="OnSearchAsync">Search</button>
     </div>
     <div class="col-auto">
         <div class="form-check form-check-inline">
@@ -56,6 +56,7 @@ Project ID: @ProjectId
     private object ticketsLock = new object();
 
     bool viewMyTickets = false;
+
     public bool ViewMyTickets
     {
         get { return viewMyTickets; }
@@ -64,9 +65,8 @@ Project ID: @ProjectId
             viewMyTickets = value;
             Task.Run(async () =>
             {
-                IEnumerable<Ticket> newTickets = Enumerable.Empty<Ticket>();
                 if (viewMyTickets)
-                    tickets = await TicketScreenUseCases.ViewOwnerTicketsAsync(ProjectId, "Frank");
+                    tickets = await TicketScreenUseCases.ViewOwnerTicketsAsync(ProjectId, "Frank Liu");
                 else
                     tickets = await TicketScreenUseCases.ViewTicketsAsync(ProjectId);
 
@@ -83,7 +83,7 @@ Project ID: @ProjectId
         tickets = await TicketScreenUseCases.ViewTicketsAsync(ProjectId);
     }
 
-    private async Task OnSearch()
+    private async Task OnSearchAsync()
     {
         tickets = await TicketScreenUseCases.SearchTicketsAsync(searchFilter);
     }

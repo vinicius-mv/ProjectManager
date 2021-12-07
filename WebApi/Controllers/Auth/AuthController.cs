@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using WebApi.Controllers.Auth.Dtos;
 
 namespace WebApi.Controllers.Auth
 {
@@ -16,24 +17,27 @@ namespace WebApi.Controllers.Auth
         }
 
         [HttpPost]
-        [Route("authenticate")]
-        public async Task<string> AuthenticateAsync(UserCredential userCredential)
+        [Route("/authenticate")]
+        public async Task<string> Authenticate(UserCredential userCredential)
         {
             return await Task.FromResult(customUserManager.Authenticate(userCredential.UserName, userCredential.Password));
         }
 
         [HttpGet]
-        [Route("verifytoken")]
-        public async Task<bool> VerifyAsync(string token)
+        [Route("/verifytoken")]
+        public async Task<bool> Verify(string token)
         {
             return await Task.FromResult(customTokenManager.VerifyToken(token));
         }
 
         [HttpPost]
-        [Route("getuserinfo")]
-        public async Task<string> GetUserInfoByTokenAsync(string token)
+        [Route("/getuserinfo")]
+        public async Task<ActionResult<string>> GetUserInfoByToken([FromBody] TokenDto request)
         {
-            return await Task.FromResult(customTokenManager.GetUserInfoByToken(token));
+            if (string.IsNullOrEmpty(request.Token))
+                return BadRequest("Invalid token");
+
+            return await Task.FromResult(customTokenManager.GetUserInfoByToken(request.Token));
         }
     }
 }

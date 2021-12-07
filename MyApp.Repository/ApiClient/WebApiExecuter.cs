@@ -26,18 +26,18 @@ namespace MyApp.Repository.ApiClient
 
         private void SetApiVersion(double apiVersion)
         {
-            httpClient.DefaultRequestHeaders.Add("x-api-version", apiVersion.ToString("F1"));
+            httpClient.DefaultRequestHeaders.Add("api-version", apiVersion.ToString("F1"));
         }
 
         public async Task<T> InvokeGet<T>(string uri)
         {
-            AddTokenHeader();
+            await AddTokenHeaderAsync();
             return await httpClient.GetFromJsonAsync<T>(GetUrl(uri));
         }
 
         public async Task<T> InvokePost<T>(string uri, T obj)
         {
-            AddTokenHeader();
+            await AddTokenHeaderAsync();
             var response = await httpClient.PostAsJsonAsync<T>(GetUrl(uri), obj);
             await HandleError(response);
 
@@ -46,23 +46,23 @@ namespace MyApp.Repository.ApiClient
 
         public async Task<string> InvokePostReturnStringAsync<T>(string uri, T obj)
         {
-            AddTokenHeader();
             var response = await httpClient.PostAsJsonAsync<T>(GetUrl(uri), obj);
             await HandleError(response);
 
-            return await response.Content.ReadAsStringAsync();
+            string responseContent = await response.Content.ReadFromJsonAsync<string>();
+            return responseContent;
         }
 
         public async Task InvokePut<T>(string uri, T obj)
         {
-            AddTokenHeader();
+            await AddTokenHeaderAsync();
             var response = await httpClient.PutAsJsonAsync<T>(GetUrl(uri), obj);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task InvokeDelete(string uri)
         {
-            AddTokenHeader();
+            await AddTokenHeaderAsync();
             var response = await httpClient.DeleteAsync(GetUrl(uri));
             response.EnsureSuccessStatusCode();
         }
@@ -81,14 +81,14 @@ namespace MyApp.Repository.ApiClient
             }
         }
 
-        private async void AddTokenHeader()
+        private async Task AddTokenHeaderAsync()
         {
-            if(tokenRepository != null && !string.IsNullOrEmpty(await tokenRepository.GetToken()))
+            string token = await tokenRepository.GetTokenAsync();
+            if (tokenRepository != null && !string.IsNullOrEmpty(token))
             {
                 httpClient.DefaultRequestHeaders.Remove("TokenHeader");
-                httpClient.DefaultRequestHeaders.Add("TokenHeader", await tokenRepository.GetToken());
+                httpClient.DefaultRequestHeaders.Add("TokenHeader", token);
             }
         }
     }
 }
- 

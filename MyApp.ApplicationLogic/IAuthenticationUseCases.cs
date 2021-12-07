@@ -6,5 +6,6 @@ namespace MyApp.ApplicationLogic
     {
         Task<string> GetUserInfoAsync(string token);
         Task<string> LoginAsync(string username, string password);
+        Task LogoutAsync();
     }
 }

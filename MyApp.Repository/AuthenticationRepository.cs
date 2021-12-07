@@ -21,7 +21,7 @@ namespace MyApp.Repository
         public async Task<string> LoginAsync(string userName, string password)
         {
             var token = await this.webApiExecuter.InvokePostReturnStringAsync("authenticate", new { UserName = userName, Password = password });
-            await tokenRepository.SetToken(token);
+            await tokenRepository.SetTokenAsync(token);
 
             if(string.IsNullOrWhiteSpace(token) || token == "\"\"") 
                 return null;
@@ -31,7 +31,11 @@ namespace MyApp.Repository
 
         public async Task<string> GetUserInfoAsync(string token)
         {
-            return await this.webApiExecuter.InvokePostReturnStringAsync("getuserinfo", new { Token = token });
+            if (string.IsNullOrWhiteSpace(token))
+                return string.Empty;
+
+            var username =  await this.webApiExecuter.InvokePostReturnStringAsync("getuserinfo", new { Token = token });
+            return username;
         }
 
     }

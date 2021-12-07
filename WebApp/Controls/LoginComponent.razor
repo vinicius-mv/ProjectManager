@@ -1,7 +1,7 @@
 ﻿@using WebApp.ViewModels
 
-@inject IAuthenticationUseCases AuthenticationUseCases
 @inject NavigationManager NavigationManager
+@inject IAuthenticationUseCases AuthenticationUseCases
 
 <AlertComponent @ref="alertComponent"></AlertComponent>
 
@@ -9,7 +9,8 @@
 
 @if (userViewModel != null)
 {
-    <EditForm Model="userViewModel" OnValidSubmit="Login" class="form-inline">
+
+    <EditForm Model="userViewModel" OnValidSubmit="Login">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
 
@@ -20,37 +21,35 @@
 
         <div class="form-group">
             <label for="password">Password</label>
-            <InputText id="password" @bind-Value="userViewModel.Password" class="form-control" type="password"></InputText>
+            <InputText id="passord" @bind-Value="userViewModel.Password" class="form-control" type="password"></InputText>
         </div>
 
-        <button type="submit" class="btn btn-btn-outline-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </EditForm>
 }
 
+
 @code {
+    AlertComponent alertComponent;
 
-    private UserViewModel userViewModel;
-
-    private AlertComponent alertComponent;
-
-    private string token;
+    UserViewModel userViewModel;
 
     protected override void OnInitialized()
     {
         userViewModel = new UserViewModel();
     }
 
-    private async Task Login()
+    async Task Login()
     {
-        token = await AuthenticationUseCases.LoginAsync(userViewModel.UserName, userViewModel.Password);
+        var token = await AuthenticationUseCases.LoginAsync(userViewModel.UserName, userViewModel.Password);
         if (string.IsNullOrWhiteSpace(token))
         {
-            alertComponent.ErrorMessage = "Login failled.";
+            alertComponent.ErrorMessage = "Login Failled.";
             alertComponent.Show();
         }
         else
         {
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/", true);
         }
     }
 }
