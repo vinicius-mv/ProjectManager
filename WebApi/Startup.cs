@@ -65,7 +65,8 @@ namespace PlatformDemo
                 });
             });
 
-            services.AddSingleton<ICustomTokenManager, CustomTokenManager>();
+            //services.AddSingleton<ICustomTokenManager, CustomTokenManager>(); // Guid based simple token
+            services.AddSingleton<ICustomTokenManager, JwtTokenManager>();      
             services.AddSingleton<ICustomUserManager, CustomUserManager>();
         }
 
