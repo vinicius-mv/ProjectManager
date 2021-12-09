@@ -53,6 +53,32 @@ namespace PlatformDemo
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Web API v1", Version = "version 1" }); // generate swagger file at path: /swagger/v1/swagger.json"
                 options.SwaggerDoc("v2", new OpenApiInfo { Title = "My Web API v2", Version = "version 2" }); // generate swagger file at path: /swagger/v2/swagger.json"
+
+                // Enable Authorization
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "tokenheader",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer,",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter your valid token in the textbox below.",
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type= ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
             });
 
             services.AddCors(options =>
@@ -66,7 +92,7 @@ namespace PlatformDemo
             });
 
             //services.AddSingleton<ICustomTokenManager, CustomTokenManager>(); // Guid based simple token
-            services.AddSingleton<ICustomTokenManager, JwtTokenManager>();      
+            services.AddSingleton<ICustomTokenManager, JwtTokenManager>();
             services.AddSingleton<ICustomUserManager, CustomUserManager>();
         }
 
