@@ -9,14 +9,14 @@
 
 @code {
     [CascadingParameter]
-    public  Task<AuthenticationState> AuthenticationState { get; set; }
+    public Task<AuthenticationState> AuthenticationState { get; set; }
 
     string userName;
 
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthenticationState;
-        userName = state.User.Identity.Name;
+        userName = state.User.Identity?.Name;
     }
 
     async Task LogoutAsync()

@@ -23,7 +23,8 @@ namespace WebApp
 
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-            builder.Services.AddSingleton<AuthenticationStateProvider, CustomTokenAuthenticationStateProvider>();
+            //builder.Services.AddSingleton<AuthenticationStateProvider, CustomTokenAuthenticationStateProvider>();
+            builder.Services.AddSingleton<AuthenticationStateProvider, JwtTokenAuthenticationStateProvider>();
 
             builder.Services.AddSingleton<ITokenRepository, TokenRepository>(); // works as a datastore
             builder.Services.AddSingleton<IWebApiExecuter>(sp =>

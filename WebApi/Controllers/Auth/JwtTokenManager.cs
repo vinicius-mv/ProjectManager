@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -29,13 +30,15 @@ namespace WebApi.Controllers.Auth
 
         public string CreateToken(string username)
         {
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, username));
+            
+            if(username == "vinicius")
+                claims.Add(new Claim(ClaimTypes.Role, "admin"));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new System.Security.Claims.ClaimsIdentity(
-                    new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, username)
-                    }),
+                Subject = new System.Security.Claims.ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(secretKey),
@@ -55,10 +58,7 @@ namespace WebApi.Controllers.Auth
             var jwtToken = tokenHandler.ReadJwtToken(token.Replace("\"", string.Empty));
             var claim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "unique_name");
 
-            if (claim != null)
-                return claim.Value;
-
-            return null;
+            return claim?.Value;
         }
 
         public bool VerifyToken(string token)
